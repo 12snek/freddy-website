@@ -24,6 +24,25 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  // --- Gallery videos: only fetch/play while scrolled into view (keeps initial page load light) ---
+  var galleryVideos = document.querySelectorAll('.js-gallery-video');
+  if (galleryVideos.length && 'IntersectionObserver' in window) {
+    var videoObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var video = entry.target;
+        if (entry.isIntersecting) {
+          video.play().catch(function () { /* autoplay may be blocked; poster stays visible */ });
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.4 });
+
+    galleryVideos.forEach(function (video) {
+      videoObserver.observe(video);
+    });
+  }
+
   // --- Footer year ---
   var yearEl = document.getElementById('year');
   if (yearEl) {
