@@ -469,8 +469,36 @@ a { color: inherit; text-decoration: none; }
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 0;
+  transition: opacity 0.15s ease;
 }
 .muted-badge .icon { width: 16px; height: 16px; color: var(--white); }
+
+/* Gallery clips are click-to-play: nothing downloads until this button is
+   tapped (preload="none" on the <video>), so no data is pulled for anyone
+   who scrolls past without wanting to watch. */
+.gallery-play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(15, 42, 77, 0.72);
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.gallery-play-btn:hover { background: rgba(15, 42, 77, 0.88); transform: translate(-50%, -50%) scale(1.07); }
+.gallery-play-btn .icon { width: 22px; height: 22px; color: var(--white); margin-left: 3px; }
+.gallery-item--video.is-playing .gallery-play-btn { display: none; }
+.gallery-item--video.is-playing .muted-badge { opacity: 1; }
+.gallery-item--video video { cursor: pointer; }
 
 /* ---------- Quote / Contact ---------- */
 .quote { padding: 20px 0 110px; }

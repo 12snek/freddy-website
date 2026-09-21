@@ -24,24 +24,43 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // --- Gallery videos: only fetch/play while scrolled into view (keeps initial page load light) ---
-  var galleryVideos = document.querySelectorAll('.js-gallery-video');
-  if (galleryVideos.length && 'IntersectionObserver' in window) {
-    var videoObserver = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        var video = entry.target;
-        if (entry.isIntersecting) {
-          video.play().catch(function () { /* autoplay may be blocked; poster stays visible */ });
-        } else {
-          video.pause();
-        }
-      });
-    }, { threshold: 0.4 });
+  // --- Gallery videos: click-to-play. Nothing is fetched until the visitor
+  // taps the play button (the <video> has preload="none"), so scrolling
+  // past a clip never pulls video data. Scrolling a playing clip out of
+  // view pauses it; it needs another tap to resume, it never auto-resumes.
+  var galleryVideoItems = document.querySelectorAll('.gallery-item--video');
+  galleryVideoItems.forEach(function (item) {
+    var video = item.querySelector('video');
+    var playBtn = item.querySelector('.gallery-play-btn');
+    if (!video || !playBtn) return;
 
-    galleryVideos.forEach(function (video) {
-      videoObserver.observe(video);
+    playBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      video.play().catch(function () { /* playback blocked; button stays visible */ });
     });
-  }
+
+    video.addEventListener('click', function () {
+      if (video.paused) {
+        video.play().catch(function () {});
+      } else {
+        video.pause();
+      }
+    });
+
+    video.addEventListener('play', function () { item.classList.add('is-playing'); });
+    video.addEventListener('pause', function () { item.classList.remove('is-playing'); });
+
+    if ('IntersectionObserver' in window) {
+      var videoObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) {
+            video.pause();
+          }
+        });
+      }, { threshold: 0.2 });
+      videoObserver.observe(item);
+    }
+  });
 
   // --- Footer year ---
   var yearEl = document.getElementById('year');
