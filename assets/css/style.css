@@ -7,6 +7,7 @@
   --navy-900: #0f2a4d;
   --navy-800: #16386b;
   --navy-700: #1c4a86;
+  --teal-700: #127672;
   --teal-600: #16948f;
   --teal-500: #1fb6b0;
   --teal-400: #4fd0ca;
@@ -94,10 +95,12 @@ a { color: inherit; text-decoration: none; }
 
 .btn-primary {
   background: var(--teal-500);
-  color: var(--white);
+  /* Navy text (not white) on the teal-500 fill -- white text here fails WCAG
+     contrast (2.5:1); navy clears it comfortably (5.7:1). */
+  color: var(--navy-900);
   box-shadow: var(--shadow-sm);
 }
-.btn-primary:hover { background: var(--teal-600); box-shadow: var(--shadow-md); }
+.btn-primary:hover { background: var(--teal-400); box-shadow: var(--shadow-md); }
 
 .btn-ghost {
   background: transparent;
@@ -118,7 +121,10 @@ a { color: inherit; text-decoration: none; }
   padding: 8px 16px;
 }
 .announce-bar a { color: var(--yellow-500); font-weight: 700; text-decoration: underline; }
-.announce-bar p { margin: 0; }
+/* Without this, the global "p { color: var(--ink-600) }" rule (more specific
+   than inheriting from .announce-bar) wins and renders the text in dark
+   ink on the dark navy bar -- practically unreadable (1.95:1 contrast). */
+.announce-bar p { margin: 0; color: inherit; }
 
 /* ---------- Header ---------- */
 .site-header {
@@ -149,7 +155,7 @@ a { color: inherit; text-decoration: none; }
   font-size: 1.15rem;
   color: var(--navy-900);
 }
-.brand-tagline { font-size: 0.72rem; letter-spacing: 0.04em; color: var(--teal-600); font-weight: 700; text-transform: uppercase; }
+.brand-tagline { font-size: 0.72rem; letter-spacing: 0.04em; color: var(--teal-700); font-weight: 700; text-transform: uppercase; }
 
 .main-nav ul {
   list-style: none;
@@ -263,7 +269,9 @@ a { color: inherit; text-decoration: none; }
   font-size: 0.78rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--teal-600);
+  /* teal-700, not teal-600: teal-600 is only 3.4-3.7:1 on the white/sky-100
+     backgrounds this sits on, under the 4.5:1 text minimum. */
+  color: var(--teal-700);
   margin: 0 0 10px;
 }
 
@@ -331,10 +339,10 @@ a { color: inherit; text-decoration: none; }
 .service-card--photo h3 { color: var(--white); }
 .service-card--photo p { color: rgba(255, 255, 255, 0.92); }
 
-.service-card--residential { --card-photo: url("../images/services/service-bg-residential.jpg"); }
-.service-card--commercial { --card-photo: url("../images/services/service-bg-commercial.jpg"); }
-.service-card--solar { --card-photo: url("../images/services/service-bg-solar.jpg"); }
-.service-card--gutters { --card-photo: url("../images/services/service-bg-gutters.jpg"); }
+.service-card--residential { --card-photo: url("../images/services/service-bg-residential.webp"); }
+.service-card--commercial { --card-photo: url("../images/services/service-bg-commercial.webp"); }
+.service-card--solar { --card-photo: url("../images/services/service-bg-solar.webp"); }
+.service-card--gutters { --card-photo: url("../images/services/service-bg-gutters.webp"); }
 
 /* ---------- Why Us ---------- */
 .why-us { padding: 100px 0; }
@@ -486,7 +494,7 @@ a { color: inherit; text-decoration: none; }
 .contact-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
 .contact-card .icon { width: 26px; height: 26px; color: var(--teal-600); flex-shrink: 0; }
 .contact-card span { display: flex; flex-direction: column; font-weight: 600; color: var(--ink-900); font-size: 0.95rem; }
-.contact-card strong { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--teal-600); font-weight: 800; }
+.contact-card strong { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--teal-700); font-weight: 800; }
 
 .quote-form {
   background: var(--white);
@@ -552,7 +560,9 @@ a { color: inherit; text-decoration: none; }
 .footer-contact a:hover { color: var(--white); }
 .footer-contact p { margin: 6px 0 0; color: var(--sky-200); }
 .footer-bottom { text-align: center; padding: 20px 0; font-size: 0.8rem; color: rgba(255, 255, 255, 0.6); }
-.footer-bottom p { margin: 0; }
+/* Same fix as .announce-bar p above -- inherit the intended light colour
+   instead of losing it to the global dark "p" rule. */
+.footer-bottom p { margin: 0; color: inherit; }
 
 /* ---------- Floating call button (mobile) ---------- */
 .fab-call {

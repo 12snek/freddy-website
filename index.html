@@ -12,12 +12,18 @@
 <link rel="icon" type="image/png" sizes="32x32" href="assets/images/logo-32.png">
 <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
 
-<!-- Fonts -->
+<!-- Fonts: loaded without blocking the initial render. The stylesheet is
+     fetched with low priority via the "preload as style, then swap"
+     trick, and swapped in once it's ready; noscript covers browsers with
+     JS disabled. Text renders immediately in the fallback stack and
+     reflows to the web font a moment later. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&amp;family=Nunito+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&amp;family=Nunito+Sans:wght@400;600;700;800&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&amp;family=Nunito+Sans:wght@400;600;700;800&amp;display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&amp;family=Nunito+Sans:wght@400;600;700;800&amp;display=swap"></noscript>
 
-<link rel="stylesheet" href="assets/css/style.css?v=6">
+<link rel="stylesheet" href="assets/css/style.css?v=7">
 
 <!-- Open Graph -->
 <meta property="og:title" content="Elite Window Cleaning Co. | Portsmouth, Hampshire &amp; West Sussex">
@@ -38,7 +44,7 @@
 <header class="site-header" id="top">
   <div class="container header-inner">
     <a class="brand" href="#top">
-      <img src="assets/images/logo.png" alt="Elite Window Cleaning Co. logo" class="brand-logo" width="56" height="56">
+      <img src="assets/images/logo-mark.png" alt="Elite Window Cleaning Co. logo" class="brand-logo" width="56" height="56">
       <span class="brand-text">
         <span class="brand-name">Elite Window Cleaning</span>
         <span class="brand-tagline">Sparkling &bull; Reliable &bull; Professional</span>
@@ -96,7 +102,7 @@
         </ul>
       </div>
       <div class="hero-art">
-        <img src="assets/images/logo.png" alt="Elite Window Cleaning Co. squirrel mascot logo" width="380" height="380">
+        <img src="assets/images/logo.png" alt="Elite Window Cleaning Co. squirrel mascot logo" width="380" height="380" fetchpriority="high">
       </div>
     </div>
     <svg class="hero-wave" viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true">
@@ -217,7 +223,7 @@
           <img src="assets/images/gallery/gallery-01-action-window-clean.jpg" alt="Freddy reaching a first-floor window with the water-fed pole, flower baskets in the foreground" loading="lazy" width="750" height="1000">
         </figure>
         <figure class="gallery-item gallery-item--video">
-          <video class="js-gallery-video" poster="assets/images/gallery/gallery-video-01-poster.jpg" muted loop playsinline preload="metadata" aria-label="Silent clip: cleaning a large roof skylight with a sea view in the background">
+          <video class="js-gallery-video" poster="assets/images/gallery/gallery-video-01-poster.webp" muted loop playsinline preload="metadata" aria-label="Silent clip: cleaning a large roof skylight with a sea view in the background">
             <source src="assets/images/gallery/gallery-video-01-skylight.webm" type="video/webm">
             <source src="assets/images/gallery/gallery-video-01-skylight.mp4" type="video/mp4">
           </video>
@@ -232,7 +238,7 @@
           <img src="assets/images/gallery/gallery-02-period-house-reach.jpg" alt="Water-fed pole reaching the upper windows of a Victorian house" loading="lazy" width="750" height="1000">
         </figure>
         <figure class="gallery-item gallery-item--video">
-          <video class="js-gallery-video" poster="assets/images/gallery/gallery-video-02-poster.jpg" muted loop playsinline preload="metadata" aria-label="Silent clip: the pole reaching the upper windows of a period building">
+          <video class="js-gallery-video" poster="assets/images/gallery/gallery-video-02-poster.webp" muted loop playsinline preload="metadata" aria-label="Silent clip: the pole reaching the upper windows of a period building">
             <source src="assets/images/gallery/gallery-video-02-period-house.webm" type="video/webm">
             <source src="assets/images/gallery/gallery-video-02-period-house.mp4" type="video/mp4">
           </video>
@@ -354,7 +360,7 @@
 <footer class="site-footer">
   <div class="container footer-inner">
     <div class="footer-brand">
-      <img src="assets/images/logo.png" alt="Elite Window Cleaning Co. logo" width="48" height="48">
+      <img src="assets/images/logo-mark.png" alt="Elite Window Cleaning Co. logo" width="48" height="48" loading="lazy">
       <div>
         <p class="footer-name">Elite Window Cleaning Co.</p>
         <p class="footer-tagline">Sparkling &bull; Reliable &bull; Professional</p>
