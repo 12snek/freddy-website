@@ -392,6 +392,8 @@ a { color: inherit; text-decoration: none; }
   color: var(--navy-900);
 }
 .about-stats span { font-size: 0.82rem; color: var(--ink-600); font-weight: 600; }
+.text-link { color: var(--teal-700); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+.text-link:hover { color: var(--teal-600); }
 .about-portrait img {
   display: block;
   width: 100%;
@@ -470,6 +472,10 @@ a { color: inherit; text-decoration: none; }
   object-fit: cover;
   display: block;
 }
+/* Full-width banner tile (e.g. the Great South Run result) -- spans the whole
+   grid row and keeps the image's own wide ratio instead of the 3:4 portrait crop. */
+.gallery-item--wide { grid-column: 1 / -1; aspect-ratio: 1600 / 645; }
+.gallery-item--wide a { display: block; width: 100%; height: 100%; }
 .gallery-item--video video {
   width: 100%;
   height: 100%;
